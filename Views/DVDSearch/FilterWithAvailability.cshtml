@@ -1,0 +1,38 @@
+﻿@using groupCW.ViewModel
+@using groupCW.Views.DVDSearch
+@model IEnumerable<FilterWithAvailabilityViewModel>
+
+
+<h4 class="text-dark mb-4 text-center">Search result(s)</h4>
+
+<a asp-controller="DVDSearch" asp-action="DVDWithAvailability"  class="btn btn-outline-dark mb-4 mt-3" style="width: 200px">Go Back To Search</a>
+
+<table class="table text-black table-bordered table-striped mb-5" style="width: 100%">
+    <thead style="border: 2px solid black;">
+        <tr>
+            <th class="text-center" style="width: 25%">Actor Name</th>
+            <th class="text-center" style="width: 25%">DVD Title.</th>
+            <th class="text-center" style="width: 25%">Total copies</th>
+
+            <th class="text-center" style="width: 25%">Total copy on shelve</th>
+
+        </tr>
+    </thead>
+
+    <tbody >
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td class="text-black text-center" width="25%">@obj.fName @obj.lName</td>
+
+                <td class="text-black text-center" width="25%">@obj.dvdTitle</td>
+
+                <td class="text-black text-center" width="25%">@obj.total2</td>
+
+                <td class="text-black text-center" width="25%">@obj.total</td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>

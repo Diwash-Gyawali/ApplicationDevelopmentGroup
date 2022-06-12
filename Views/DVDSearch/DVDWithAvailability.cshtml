@@ -1,0 +1,16 @@
+﻿@using DatabaseCoursework.Models
+@using groupCW.Views.DVDSearch
+@model JoinHelper
+
+
+@*<a class="text-decoration-none btn-primary btn btn-light mb-3" asp-controller="DVDSearch" asp-action="Filter">Filter DVDs</a>*@
+
+<h3 class="text-dark mb-4 text-center">Search for Available DVD with Actor's surname</h3>
+
+<form method="post" asp-action="FilterWithAvailability" class="mb-3 mt-3">
+     
+    <input asp-for="lName" class="form-control mb-3" placeholder="Search for available DVD Title with Actor's surname" />
+
+     <button type="submit" class="btn btn-outline-dark" style="width: 120px"><i class="bi bi-search"></i> Search</button>
+</form>
+

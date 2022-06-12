@@ -1,0 +1,48 @@
+﻿@using DatabaseCoursework.Models
+@using groupCW.Views.DVDSearch
+@model JoinList
+
+<h3 class="text-dark mb-4 text-center">Search for DVD Members</h3>
+
+<form method="post" asp-action="Index" class="mb-3 mt-3">
+     
+    <input asp-for="memberLastName" class="form-control mb-3" placeholder="Search for DVD Title Members" />
+
+     <button type="submit" class="btn btn-outline-dark" style="width: 120px"><i class="bi bi-search"></i> Search</button>
+</form>
+
+
+@if ( Model.showAllMember == true )
+    {
+
+<h3 class="text-dark mb-4 text-center">Search result(s)</h3>
+
+<table class="table text-black table-bordered table-striped" style="width: 100%">
+    <thead style="border: 2px solid black;">
+        <tr>
+            <th >DVD Titles</th>
+            <th >DVD Released</th>
+            <th >Copy Number</th>
+            <th >Actor First Name</th>
+            <th >Actor Last Name</th>
+        </tr>
+    </thead>
+
+          
+    <tbody >
+        @foreach(var obj in Model.JoinHelperList)
+        {
+            <tr>
+                <td class="text-black" >@obj.dvdtitle</td>
+                <td class="text-black" >@obj.releaseDate2</td>
+                <td class="text-black" >@obj.copyNumber</td>
+
+                <td class="text-black" >@obj.fName</td>
+                <td class="text-black" >@obj.lName</td>
+
+            </tr>
+        }
+    </tbody>
+    
+</table>
+}

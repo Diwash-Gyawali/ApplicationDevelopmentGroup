@@ -1,0 +1,191 @@
+﻿@using groupCW.ViewModel
+
+@model List<ShowAllViewModel>
+
+    <h3 class="text-dark mb-4 text-center">Update Return Date</h3>
+
+<table class="table text-dark table-bordered table-striped mb-5" style="width: 100%">
+    <thead style="border: 2px solid black;">
+        <tr>
+            <th >DVD Title</th>
+            <th >Copy No</th>
+            <th >Loan No</th>
+            <th >Loan Type</th>
+            <th >Date Out</th>
+            <th >Due Date</th>
+            <th >Date Returned</th>
+            <th >Is late?</th>
+            <th >Total late days</th>
+            <th >Penalty Charge (per day)</th>
+            <th >Total Penalty</th>
+            <th >Update</th>
+        </tr>
+    </thead>
+
+          
+    <tbody >
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td class="text-dark">@obj.DvdTitle</td>
+                <td class="text-dark" >@obj.CopyNumber</td>
+                
+                @*Loan No*@
+                <td class="text-dark" >
+                    @if (@obj.LoanNumber == null)
+                    {
+                        <span>-</span>
+                    } else
+                    {
+                        <span>@obj.LoanNumber</span>
+                    }
+                </td>
+
+                @*Loan Type*@
+                <td class="text-dark" >
+                    @if (@obj.LoanType == null)
+                    {
+                        <span>-</span>
+                    } else
+                    {
+                        <span>@obj.LoanType</span>
+                    }
+                </td>
+
+                @*Date Out*@
+                <td class="text-dark" >
+                    @if (@obj.DateOut != null)
+                    {
+                        <span>@obj.DateOut</span>
+                    } else
+                    {
+                        <span>Not Loaned Yet</span>
+                    }
+                </td>
+
+                @*Due Date*@
+                <td class="text-dark" >
+                    @if (@obj.DateOut != null) {
+                        <span>@obj.DueDate</span>
+                    } else {
+                        <span>-</span>
+                    }
+                </td>
+
+                @*Date Returned*@
+                <td class="text-dark" >
+                    @if (@obj.DateOut != null && @obj.ReturnDate == null)
+                    {
+                        <span>Not Returned</span>
+                    } else if (@obj.DateOut != null && @obj.ReturnDate != null)
+                    {
+                        <span>@obj.ReturnDate</span>
+                    } else if (@obj.DateOut == null)
+                    {
+                        <span>-</span>
+                    }
+                </td>
+
+                @*Is late?*@
+                <td class="text-dark" >
+                    @if (@obj.DateOut == null)
+                    {
+                        <span>-</span>
+                    } else if (@obj.ReturnDate > @obj.DueDate)
+                    {                        
+                        <span>Yes</span>
+                    } else
+                    {
+                        <span>No</span>
+                    }
+
+                </td>
+
+                @*If late? Total late days*@
+                <td class="text-dark" >
+                    @if (@obj.DateOut == null)
+                    {
+                        <span>-</span>
+                    } else if (@obj.ReturnDate > @obj.DueDate)
+                    {           
+                        
+                       <span>@obj.NoOfDaysDVDNotReturnedAfterDeadline.Split('.')[0]</span>
+
+
+                    } else
+                    {
+                        <span>-</span>
+                    }
+
+                </td>
+                
+                @*Penalty Charge (per day)*@
+                <td class="text-dark" >
+                   
+                    @if (@obj.ReturnDate > @obj.DueDate)
+                    {
+                        <span>@obj.PenaltyCharge</span>
+                        
+                    } else
+                    {
+                        <span>-</span>
+                    
+                    }  
+                </td>
+
+                @*Total Penalty*@
+                <td class="text-dark" >
+
+                    @if ( 
+                    @obj.NoOfDaysDVDNotReturnedAfterDeadline != null
+                    && @obj.ReturnDate != null && @obj.DueDate != null
+                   )
+                    {
+
+                        @if (@obj.NoOfDaysDVDNotReturnedAfterDeadline.Contains('-'))
+                        {
+                            <span></span>
+                        } else
+                        {
+                            var x = @obj.NoOfDaysDVDNotReturnedAfterDeadline.Split('.')[0];
+
+                            //var y = Convert.ToInt32(x);
+
+                            <span>@( @obj.PenaltyCharge * 20 )</span>
+
+                        }
+                    }
+
+                </td>
+
+                @*Update Button*@
+                <td class="text-dark" >
+
+                    @if (@obj.DateOut != null && @obj.ReturnDate == null)
+                    {
+                        <a 
+                     style="text-decoration: none"
+                     class="badge rounded-pill bg-info" 
+                     asp-route-loanid="@obj.LoanNumber" 
+                     asp-controller="ShowAllDVD" asp-action="UpdateReturnDate">Add Return Date</a>
+                    }
+
+                     
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    
+</table>
+ @*@( @obj.PenaltyCharge * Int32.Parse(@obj.NoOfDaysDVDNotReturnedAfterDeadline.Split('.')[0]) )*@
+@*    @if (@obj.NoOfDaysDVDNotReturnedAfterDeadline != null &&  Int32.Parse(@obj.NoOfDaysDVDNotReturnedAfterDeadline.Split('.')[0]) > 0 )
+                        {
+                            <span>
+                               
+                            </span>
+                        } else
+                        {
+                            <span>-</span>
+                        }*@
